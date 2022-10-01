@@ -21,6 +21,18 @@ public class Ball {
         return convertIntArrayToInt(numberArray);
     }
 
+    public boolean validateBallNumber(int ballNumber) {
+        String str = Integer.toString(ballNumber);
+        str = str.replace("0", "");
+        HashSet<Integer> set = new HashSet<>();
+
+        for (int i = 0; i < str.length(); i++) {
+            set.add((int) str.charAt(i));
+        }
+
+        return str.length() == size && set.size() == size;
+    }
+
     private int[] convertSetToIntArray(Set<Integer> tempBallNumbers) {
         int[] result = new int[size];
         int i = 0;
