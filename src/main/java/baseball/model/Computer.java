@@ -35,8 +35,18 @@ public class Computer {
     }
 
     public void printGameResult(int ballCount, int strikeCount) {
-        printIfPlayerBallResult(ballCount, strikeCount);
+        String gameResultString = gameResultString(ballCount, strikeCount);
+
+        printIfPlayerBallResult(gameResultString);
         printIfThreeStrike(strikeCount);
+        printIfNothing(ballCount, strikeCount);
+    }
+
+    public String gameResultString(int ballCount, int strikeCount) {
+        String result = ballResultString(ballCount) + " " + strikeResultString(strikeCount);
+        result = result.trim();
+
+        return result;
     }
 
     public String ballResultString(int ballCount) {
@@ -53,15 +63,10 @@ public class Computer {
         return "";
     }
 
-    public void printIfPlayerBallResult(int ballCount, int strikeCount) {
-        String result = ballResultString(ballCount) + " " + strikeResultString(strikeCount);
-        result = result.trim();
-
+    public void printIfPlayerBallResult(String result) {
         if (result.length() > 0) {
             computerView.printPlayerBallResult(result);
         }
-
-        printIfNothing(ballCount, strikeCount);
     }
 
     public void printIfThreeStrike(int strikeCount) {
