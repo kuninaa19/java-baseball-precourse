@@ -8,7 +8,7 @@ public class Game {
     GameView gameView;
 
     public Game(Computer computer, Player player, GameView gameView) {
-        this.computer= computer;
+        this.computer = computer;
         this.player = player;
         this.gameView = gameView;
     }
@@ -16,11 +16,19 @@ public class Game {
     public void play() {
         computer.generateBallNumber();
 
-        gameView.printPlayerInputGuide();
+        progress();
+    }
 
-        int inputNumber = player.input();
-        player.validateInputBallNumber(inputNumber);
+    public void progress() {
+        boolean end = false;
 
-        computer.judgmentPlayerBall(player.getBallNumber());
+        while (!end) {
+            gameView.printPlayerInputGuide();
+
+            int inputNumber = player.input();
+            player.validateInputBallNumber(inputNumber);
+
+            end = computer.judgmentPlayerBall(player.getBallNumber());
+        }
     }
 }
