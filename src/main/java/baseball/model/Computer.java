@@ -18,16 +18,25 @@ public class Computer {
         this.ballNumber = ball.generateBallNumber();
     }
 
-    public void judgmentPlayerBall(int playerBallNumber) {
+    public boolean judgmentPlayerBall(int playerBallNumber) {
         String[] computerBallNumberStringArray = ballJudgment.convertIntToStringArray(ballNumber);
         String[] playerBallNumberStringArray = ballJudgment.convertIntToStringArray(playerBallNumber);
 
         int ballCount = ballJudgment.countBall(computerBallNumberStringArray, playerBallNumberStringArray);
         int strikeCount = ballJudgment.countStrike(computerBallNumberStringArray, playerBallNumberStringArray);
 
-        printIfPlayerBallResult(ballResultString(ballCount), strikeResultString(strikeCount));
+        printGameResult(ballCount, strikeCount);
+
+        return playerGameWin(strikeCount);
+    }
+
+    public boolean playerGameWin(int strikeCount) {
+        return strikeCount == 3;
+    }
+
+    public void printGameResult(int ballCount, int strikeCount) {
+        printIfPlayerBallResult(ballCount, strikeCount);
         printIfThreeStrike(strikeCount);
-        printIfNothing(ballCount, strikeCount);
     }
 
     public String ballResultString(int ballCount) {
@@ -44,13 +53,15 @@ public class Computer {
         return "";
     }
 
-    public void printIfPlayerBallResult(String ballResult, String strikeResult) {
-        String result = ballResult + " " + strikeResult;
+    public void printIfPlayerBallResult(int ballCount, int strikeCount) {
+        String result = ballResultString(ballCount) + " " + strikeResultString(strikeCount);
         result = result.trim();
 
         if (result.length() > 0) {
             computerView.printPlayerBallResult(result);
         }
+
+        printIfNothing(ballCount, strikeCount);
     }
 
     public void printIfThreeStrike(int strikeCount) {
